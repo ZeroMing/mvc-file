@@ -1,9 +1,14 @@
 package com.example.demo;
-
+import org.apache.commons.io.FileUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletOutputStream;
@@ -78,7 +83,18 @@ public class DemoApplication {
             }
         }
 
+    }
 
+
+
+    @GetMapping("/download1")
+    public ResponseEntity<byte[]> export(String fileName, String filePath) throws IOException {
+        String path = "F:\\BaiduYunDownload\\傻瓜都读得懂的理财书.pdf";
+        HttpHeaders headers = new HttpHeaders();
+        File file = new File(filePath);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", fileName);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
 
 }
