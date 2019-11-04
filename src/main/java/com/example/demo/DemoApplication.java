@@ -91,7 +91,7 @@ public class DemoApplication {
     public ResponseEntity<byte[]> export(String fileName, String filePath) throws IOException {
         String path = "F:\\BaiduYunDownload\\傻瓜都读得懂的理财书.pdf";
         HttpHeaders headers = new HttpHeaders();
-        File file = new File(filePath);
+        File file = new File(path);
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", fileName);
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
